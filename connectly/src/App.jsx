@@ -132,7 +132,10 @@ const App = () => {
                 />
               }
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={<Profile currentUser={currentUser} />}
+            />
             <Route
               path="/myPosts"
               element={

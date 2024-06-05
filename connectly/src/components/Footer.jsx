@@ -1,6 +1,5 @@
 import { FaHome } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaDashcube } from "react-icons/fa";
@@ -14,9 +13,7 @@ const Footer = () => {
             <FaHome />
           </Link>
         </li>
-        <li>
-          <CiSearch />
-        </li>
+
         <li>
           <Link to="/newPost">
             <IoMdAdd />
