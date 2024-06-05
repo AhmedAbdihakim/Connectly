@@ -6,19 +6,26 @@ import Profile from "./components/Profile";
 import MyPosts from "./components/MyPosts";
 import Navbar from "./components/Navbar";
 import NewPost from "./components/NewPost";
+import { useState } from "react";
 
 const App = () => {
+  const [user, setUser] = useState("");
   return (
     <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Feed />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/Posts/:postId" element={<Post />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/myPosts" element={<MyPosts />} />
-        <Route path="/newPost" element={<NewPost />} />
-      </Routes>
+      {user ? (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Feed />} />
+            <Route path="/Posts/:postId" element={<Post />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/myPosts" element={<MyPosts />} />
+            <Route path="/newPost" element={<NewPost />} />
+          </Routes>
+        </>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 };
