@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <nav className="sm:hidden flex w-screen fixed bottom-0">
+    <nav className="sm:hidden flex w-screen fixed bottom-0 dark:bg-gray-800 rounded-t">
       <ul className="flex w-screen justify-between p-8">
         <li>
           <Link to="/">

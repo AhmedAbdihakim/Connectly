@@ -16,6 +16,8 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +30,18 @@ const App = () => {
       }
     };
     fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await api.get("/comments");
+        setComments(response.data);
+      } catch (error) {
+        console.log("Error fetching comments:", error);
+      }
+    };
+    fetchComments();
   }, []);
 
   useEffect(() => {
@@ -92,14 +106,34 @@ const App = () => {
     navigate("/login");
   };
 
+  const handleAddComment = () => {
+    if (newComment.trim() !== "") {
+      setComments([...comments, newComment]);
+      setNewComment("");
+    }
+  };
+
   return (
     <div>
       {currentUser ? (
         <>
           <Navbar handleLogOut={handleLogOut} username={currentUser.username} />
           <Routes>
-            <Route path="/" element={<Feed posts={posts} users={users} />} />
-            <Route path="/Posts/:postId" element={<Post />} />
+            <Route
+              path="/"
+              element={<Feed posts={posts} users={users} currentUser />}
+            />
+            <Route
+              path="/Posts/:postId"
+              element={
+                <Post
+                  comments={comments}
+                  setComments={setComments}
+                  newComment={newComment}
+                  setNewComment={setNewComment}
+                />
+              }
+            />
             <Route path="/profile" element={<Profile />} />
             <Route path="/myPosts" element={<MyPosts />} />
             <Route path="/newPost" element={<NewPost />} />

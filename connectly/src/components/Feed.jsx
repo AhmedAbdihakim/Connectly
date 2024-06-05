@@ -12,7 +12,7 @@ const Feed = ({ posts, users }) => {
   const shuffledPosts = posts.sort(() => Math.random() - 0.5);
 
   return (
-    <section className="container mx-auto max-w-xl px-4">
+    <section className="container mx-auto max-w-xl px-4 mb-20">
       <div className="flex flex-col gap-4">
         {shuffledPosts.map((post) => {
           // Find the user associated with the post
