@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import Swal from "sweetalert2";
 
-const NewPost = ({ currentUser }) => {
+const EditPost = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [posts, setPosts] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPost = async () => {
       try {
-        const response = await api.get("/posts");
-        setPosts(response.data);
+        const response = await api.get(`/posts/${id}`);
+        setTitle(response.data.title);
+        setBody(response.data.body);
       } catch (error) {
-        console.log("Error fetching posts:", error);
+        console.log("Error fetching post:", error);
       }
     };
 
-    fetchPosts();
-  }, []);
+    fetchPost();
+  }, [id]);
 
-  const handlePost = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
@@ -34,24 +34,15 @@ const NewPost = ({ currentUser }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Determine the new post ID
-          const newPostId =
-            posts.length === 0 ? 1 : posts[posts.length - 1].id + 1;
-
-          // Create the new post
-          await api.post("/posts", {
-            id: newPostId,
+          await api.put(`/posts/${id}`, {
             title,
             body,
-            userId: currentUser.id, // Use current user's ID
           });
-
           Swal.fire("Saved!", "", "success");
-          // Navigate to another page if needed
-          navigate("/"); // Replace with your desired path
+          navigate("/myPosts");
         } catch (error) {
-          console.log("Error creating post:", error);
-          Swal.fire("Error!", "There was an issue creating the post.", "error");
+          console.log("Error updating post:", error);
+          Swal.fire("Error!", "There was an error saving the post.", "error");
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -61,8 +52,8 @@ const NewPost = ({ currentUser }) => {
 
   return (
     <div className="container mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">New post</h1>
-      <form onSubmit={handlePost}>
+      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
+      <form onSubmit={handleSave}>
         <div className="mb-4">
           <label
             htmlFor="title"
@@ -97,13 +88,13 @@ const NewPost = ({ currentUser }) => {
         </div>
         <button
           type="submit"
-          className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
         >
-          Post
+          Save
         </button>
       </form>
     </div>
   );
 };
 
-export default NewPost;
+export default EditPost;

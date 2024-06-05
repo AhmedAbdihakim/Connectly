@@ -40,6 +40,7 @@ const Navbar = ({ handleLogOut, username }) => {
         <img src={Connectly} alt="Logo" className="h-10 w-16" />
         <button onClick={handleLogOut}>Log out</button>
       </nav>
+      <hr className="mb-4" />
     </>
   );
 };

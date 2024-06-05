@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import MyPosts from "./components/MyPosts";
 import Navbar from "./components/Navbar";
 import NewPost from "./components/NewPost";
+import EditPost from "./components/EditPost";
 import Footer from "./components/Footer";
 import api from "./api/axios";
 import { SignJWT } from "jose"; // Import SignJWT from jose
@@ -119,10 +120,7 @@ const App = () => {
         <>
           <Navbar handleLogOut={handleLogOut} username={currentUser.username} />
           <Routes>
-            <Route
-              path="/"
-              element={<Feed posts={posts} users={users} currentUser />}
-            />
+            <Route path="/" element={<Feed posts={posts} users={users} />} />
             <Route
               path="/Posts/:postId"
               element={
@@ -135,8 +133,21 @@ const App = () => {
               }
             />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/myPosts" element={<MyPosts />} />
-            <Route path="/newPost" element={<NewPost />} />
+            <Route
+              path="/myPosts"
+              element={
+                <MyPosts
+                  posts={posts}
+                  currentUser={currentUser}
+                  setPosts={setPosts}
+                />
+              }
+            />
+            <Route
+              path="/newPost"
+              element={<NewPost currentUser={currentUser} />}
+            />
+            <Route path="/post/:id" element={<EditPost />} />
           </Routes>
           <Footer />
         </>

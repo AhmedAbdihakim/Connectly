@@ -3,6 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { FaDashcube } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -19,6 +20,11 @@ const Footer = () => {
         <li>
           <Link to="/newPost">
             <IoMdAdd />
+          </Link>
+        </li>
+        <li>
+          <Link to="/myPosts">
+            <FaDashcube />
           </Link>
         </li>
         <li>
