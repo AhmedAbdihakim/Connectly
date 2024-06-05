@@ -9,6 +9,7 @@ import NewPost from "./components/NewPost";
 import { useState } from "react";
 import api from "./api/axios";
 import { SignJWT } from "jose"; // Import SignJWT from jose
+import Footer from "./components/Footer";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -54,7 +55,6 @@ const App = () => {
         localStorage.setItem("jwtToken", token);
 
         navigate("/");
-        setUsername("");
       } else {
         alert("User not found");
       }
@@ -81,6 +81,7 @@ const App = () => {
             <Route path="/myPosts" element={<MyPosts />} />
             <Route path="/newPost" element={<NewPost />} />
           </Routes>
+          <Footer />
         </>
       ) : (
         <Login
