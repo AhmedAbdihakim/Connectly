@@ -65,7 +65,7 @@ const MyPosts = ({ posts, setPosts, currentUser }) => {
                 {post.body}
               </p>
               <div className="flex space-x-4">
-                <Link to={`/edit/${post.id}`}>
+                <Link to={`/post/${post.id}`}>
                   <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     <BiEdit />
                   </button>

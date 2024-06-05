@@ -1,8 +1,17 @@
-# React + Vite
+# Connectly: Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+Connectly is a social media application developed using React and Tailwind CSS. It utilizes the JSONPlaceholder API to fetch and display posts, showcasing the developer's skills in building interactive and responsive web applications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+- **View Posts**: Users can browse through posts fetched from the JSONPlaceholder API.
+- **User Information**: Each post includes details about the user who created it.
+- **Responsive Design**: The app is designed to provide a seamless experience across different devices.
+
+## Technologies Used
+
+- **React**: A popular JavaScript library for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for creating custom designs with ease.
+- **JSONPlaceholder API**: A fake REST API for testing and prototyping.
