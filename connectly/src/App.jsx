@@ -1,4 +1,5 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Feed from "./components/Feed";
 import Login from "./components/Login";
 import Post from "./components/Post";
@@ -6,15 +7,40 @@ import Profile from "./components/Profile";
 import MyPosts from "./components/MyPosts";
 import Navbar from "./components/Navbar";
 import NewPost from "./components/NewPost";
-import { useState } from "react";
+import Footer from "./components/Footer";
 import api from "./api/axios";
 import { SignJWT } from "jose"; // Import SignJWT from jose
-import Footer from "./components/Footer";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [username, setUsername] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await api.get("/posts");
+        setPosts(response.data);
+      } catch (error) {
+        console.log("Error fetching posts:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get("/users");
+        setUsers(response.data);
+      } catch (error) {
+        console.log("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   function generateRandomLetters(length) {
     const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -26,8 +52,7 @@ const App = () => {
     return randomString;
   }
 
-  const secretKey = generateRandomLetters(32); // Generate a 32-character random letter key
-  // console.log(secretKey); // For debugging purposes
+  const secretKey = generateRandomLetters(32);
 
   const handleLogin = async () => {
     try {
@@ -36,13 +61,11 @@ const App = () => {
       if (user) {
         setCurrentUser(user);
 
-        // Define your payload with the username
         const payload = {
           userId: user.id,
           username: user.username,
         };
 
-        // Generate the token with payload
         const encoder = new TextEncoder();
         const token = await new SignJWT(payload)
           .setProtectedHeader({ alg: "HS256" })
@@ -59,7 +82,7 @@ const App = () => {
         alert("User not found");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error during login:", error);
     }
   };
 
@@ -73,9 +96,9 @@ const App = () => {
     <div>
       {currentUser ? (
         <>
-          <Navbar handleLogOut={handleLogOut} username={username} />
+          <Navbar handleLogOut={handleLogOut} username={currentUser.username} />
           <Routes>
-            <Route path="/" element={<Feed />} />
+            <Route path="/" element={<Feed posts={posts} users={users} />} />
             <Route path="/Posts/:postId" element={<Post />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/myPosts" element={<MyPosts />} />

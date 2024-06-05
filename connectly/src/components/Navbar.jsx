@@ -18,7 +18,12 @@ const Navbar = ({ handleLogOut, username }) => {
             <Link to="/newPost">New post</Link>
           </li>
         </ul>
-        <ul className="flex space-x-8">
+        <input
+          type="text"
+          placeholder="Search for users or posts..."
+          className="w-64 px-2 py-1 border rounded-md dark:text-black"
+        />
+        <ul className="flex space-x-8 items-center">
           <li>{username}</li>
           <li>
             <Link to="/profile">
